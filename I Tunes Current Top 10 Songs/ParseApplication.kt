@@ -11,7 +11,7 @@ class ParseApplication {
     val applications = ArrayList<FeedEntry>()
 
     fun parse(xmlData: String): Boolean {
-        Log.d(TAG, "parse called with $xmlData")
+        //Log.d(TAG, "parse called with $xmlData")
         var status = true
         var inEntry = false
         var textValue = ""
@@ -27,7 +27,7 @@ class ParseApplication {
                 val tagName = xpp.name?.toLowerCase()
                 when(eventType) {
                     XmlPullParser.START_TAG -> {
-                        Log.d(TAG, "parse starting tag for " + tagName)
+//                        Log.d(TAG, "parse starting tag for " + tagName)
                         if (tagName == "entry") {
                             inEntry = true
                         }
@@ -35,7 +35,7 @@ class ParseApplication {
                     XmlPullParser.TEXT -> textValue = xpp.text
 
                     XmlPullParser.END_TAG -> {
-                        Log.d(TAG, "parse: Ending tag for " + tagName)
+//                        Log.d(TAG, "parse: Ending tag for " + tagName)
                         if (inEntry) {
                             when(tagName) {
                                 "entry" -> {
@@ -50,14 +50,15 @@ class ParseApplication {
                                     currentRecord.artist = textValue
                                     c=c+1
                                     currentRecord.number = c
+
+//                                    Log.d(TAG, "name = ${currentRecord.name} + artist = ${currentRecord.artist}")
                                 }
                                 "releasedate" -> currentRecord.releasedate = textValue
-                                "summary" -> currentRecord.summary = textValue
                                 "image" -> currentRecord.imageURL = textValue
 
                             }
                         }
-                        Log.d(TAG, "number = ${currentRecord.number} + name = ${currentRecord.name} + artist = ${currentRecord.artist}")
+                        Log.d(TAG, "name = ${currentRecord.name} + artist = ${currentRecord.artist}")
                     }
                 }
                 eventType = xpp.next()
